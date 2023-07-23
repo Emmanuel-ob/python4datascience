@@ -1,0 +1,32 @@
+This is the first line
+This is the second line
+This is the Third line
+My name is Emmanuel
+This is the first line
+This is the second line
+
+RewriteEngine On
+
+# If its not HTTPS
+RewriteCond %{HTTPS} off
+
+# Comment out the RewriteCond above, and uncomment the RewriteCond below if you're using
+ a load balancer (e.g. CloudFlare) for SSL
+
+# RewriteCond %{HTTP:X-Forwarded-Proto} !https
+# Redirect to the same URL with https://, ignoring all further rules if this one is in e
+ffect
+
+RewriteRule ^(.*) https://%{HTTP_HOST}/$1 [R,L]
+
+RewriteBase /
+
+RewriteRule ^index\.html$ - [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteCond %{REQUEST_FILENAME} !-l
+
+RewriteRule . /index.html [L]
